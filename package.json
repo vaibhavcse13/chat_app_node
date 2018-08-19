@@ -1,0 +1,30 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "Chat app for learning node ",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaibhavcse13/chat_app_node.git"
+  },
+  "keywords": [
+    "chatapp",
+    "node",
+    "express"
+  ],
+  "author": "Vaibhav Shukla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vaibhavcse13/chat_app_node/issues"
+  },
+  "homepage": "https://github.com/vaibhavcse13/chat_app_node#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
