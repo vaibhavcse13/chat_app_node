@@ -1,6 +1,10 @@
 $(()=>{
     $("#send").click(function(){
         addMessage({name : "Vaibhav Shukla" , message:  "Hi , How are you ?"})
+    });
+
+    $.get("http://localhost:3000/messages" , function(data){
+        data.forEach(addMessage);
     })
     
 });
