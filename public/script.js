@@ -1,14 +1,23 @@
 $(()=>{
     $("#send").click(function(){
-        addMessage({name : "Vaibhav Shukla" , message:  "Hi , How are you ?"})
+        var message = {name : $("#name").val() , message : $("#msgBody").val()}
+        postMessage(message)
     });
 
-    $.get("http://localhost:3000/messages" , function(data){
-        data.forEach(addMessage);
-    })
+
+    getMessage()
     
 });
 
+function getMessage() {
+    $.get("http://localhost:3000/messages" , function(data){
+        data.forEach(addMessage);
+    })
+}
+
+function postMessage(message){
+    $.post("http://localhost:3000/message" , message);
+}
 function addMessage(msg){
     $("#message").append(`<h4> ${msg.name} </h4> <p>${msg.message}</p>`)
 }

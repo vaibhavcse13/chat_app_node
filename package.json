@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/vaibhavcse13/chat_app_node#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3"
   }
 }
