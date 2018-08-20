@@ -9,23 +9,42 @@ const express =  require('express'),
 // server static content 
 app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}))
-var messages = [{name :"Vaibhav" , message : "How are you ?"},
-    {name :"Sid" , message : "Yeah Fine "}
-]
+app.use(bodyParser.urlencoded({extended:false}));
+const dbUrl = "mongodb://vaibhav:vaibhav123@ds125862.mlab.com:25862/chat_app_node";
+
+var Message = mongoose.model('Message' , {
+    name : String ,
+    message : String
+})
+
 app.get('/messages' , (req , res) => {   
-    res.send(messages);
+    Message.find({} , (err , messages) =>{
+        if(err)
+            res.sendStatus(500);
+        res.send(messages)
+    })
 });
 
 // post reuest to post messge 
 app.post('/message' , (req , res) => {
-    messages.push(req.body);
-    io.emit('message' , req.body);
-    res.sendStatus(200)
+    
+    var message =  new Message(req.body);
+    message.save((err)=>{
+        if(err)
+            res.sendStatus(500);
+
+            io.emit('message' , req.body);
+            res.sendStatus(200)
+    })
+   
 });
 
 io.on('connection' , (socket) => {
     console.log("user connected");
+});
+
+mongoose.connect(dbUrl, (err)=>{
+    console.log("database connected " , err);
 })
 var server =  http.listen(3000 ,  ()=>{
     console.log(`server is running on port ${server.address().port}`)
