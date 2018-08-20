@@ -1,6 +1,9 @@
 const express =  require('express'),
-      bodyParser =  require('body-parser');
-     app =  express();
+      bodyParser =  require('body-parser'),
+     app =  express(),
+     http =  require('http').Server(app),
+     io =  require('socket.io')(http),
+     mongoose =  require('mongoose');
 
 
 // server static content 
@@ -16,11 +19,14 @@ app.get('/messages' , (req , res) => {
 
 // post reuest to post messge 
 app.post('/message' , (req , res) => {
-    console.log(req.body)
     messages.push(req.body);
-    console.log(messages)
+    io.emit('message' , req.body);
     res.sendStatus(200)
+});
+
+io.on('connection' , (socket) => {
+    console.log("user connected");
 })
-var server =  app.listen(3000 ,  ()=>{
+var server =  http.listen(3000 ,  ()=>{
     console.log(`server is running on port ${server.address().port}`)
 })

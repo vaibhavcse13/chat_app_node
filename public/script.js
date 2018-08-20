@@ -1,13 +1,13 @@
+var socket = io();
 $(()=>{
     $("#send").click(function(){
         var message = {name : $("#name").val() , message : $("#msgBody").val()}
         postMessage(message)
     });
-
-
-    getMessage()
-    
+    getMessage()   
 });
+
+socket.on('message' , addMessage)
 
 function getMessage() {
     $.get("http://localhost:3000/messages" , function(data){
