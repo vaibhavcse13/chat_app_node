@@ -33,8 +33,18 @@ app.post('/message' , (req , res) => {
         if(err)
             res.sendStatus(500);
 
-            io.emit('message' , req.body);
-            res.sendStatus(200)
+        Message.findOne({message : 'fuck'} ,(err , censor) =>{
+
+            if(censor){
+                console.log("censor word found " ,  censor);
+                Message.remove({_id : censor.id} , (err) =>{
+                    console.log("word removed")
+                })
+            }
+        })
+        
+        io.emit('message' , req.body);
+        res.sendStatus(200)
     })
    
 });
@@ -43,7 +53,7 @@ io.on('connection' , (socket) => {
     console.log("user connected");
 });
 
-mongoose.connect(dbUrl, (err)=>{
+mongoose.connect(dbUrl, {useNewUrlParser : true} , (err)=>{
     console.log("database connected " , err);
 })
 var server =  http.listen(3000 ,  ()=>{
