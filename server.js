@@ -35,7 +35,7 @@ app.post('/message' , (req , res) => {
         if(err)
             res.sendStatus(500);
 
-        Message.findOne( {'message' : 'fuck'} , (err , censored) => {
+        Message.findOne( {'message' : 'badword'} , (err , censored) => {
 
             console.log(censored)
             if(err)
