@@ -30,7 +30,7 @@ app.post('/message' , (req , res) => {
     
     var message =  new Message(req.body);
     message.save().then(()=> {
-        Message.findOne({'message' : 'fuck'} , (err , censor) =>{
+        Message.findOne({'message' : 'badword'} , (err , censor) =>{
 
             if(err)
                 console.log("error in filtering" , err)
