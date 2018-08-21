@@ -29,11 +29,8 @@ app.get('/messages' , (req , res) => {
 app.post('/message' , (req , res) => {
     
     var message =  new Message(req.body);
-    message.save((err)=>{
-        if(err)
-            res.sendStatus(500);
-
-            Message.findOne({'message' : 'fuck'} , (err , censor) =>{
+    message.save().then(()=> {
+        Message.findOne({'message' : 'fuck'} , (err , censor) =>{
 
             if(err)
                 console.log("error in filtering" , err)
@@ -46,10 +43,17 @@ app.post('/message' , (req , res) => {
                 })
             }
         })
-        
         io.emit('message' , req.body);
         res.sendStatus(200)
+           
+    }).catch((err) => {
+        
+        console.log(err)
+        res.sendStatus(500)
     })
+        
+      
+
    
 });
 
