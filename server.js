@@ -33,8 +33,12 @@ app.post('/message' , (req , res) => {
         if(err)
             res.sendStatus(500);
 
-        Message.findOne({message : 'fuck'} ,(err , censor) =>{
+            Message.findOne({'message' : 'fuck'} , (err , censor) =>{
 
+            if(err)
+                console.log("error in filtering" , err)
+
+            console.log("censor" , censor)
             if(censor){
                 console.log("censor word found " ,  censor);
                 Message.remove({_id : censor.id} , (err) =>{
